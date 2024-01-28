@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 import os
 from dotenv import load_dotenv
-from openai import OpenAI, RateLimitError
+from openai import OpenAI, RateLimitError, OpenAIError
 
 load_dotenv()
 
@@ -39,6 +39,9 @@ def prompt():
     return jsonify({'generated_text': generated_text}), 200
   except RateLimitError:
     return jsonify({'error': 'Se ha alcanzado el límite de solicitudes. Por favor, inténtelo de nuevo más tarde.'}), 429
+  except OpenAIError as e:
+    error_message = str(e)
+    return jsonify({'error': error_message}), 500
   except KeyError:
     return jsonify({'error': 'El campo "text" no está presente en los datos JSON.'}), 400
   except ValueError as e:

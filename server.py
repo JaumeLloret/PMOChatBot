@@ -1,9 +1,10 @@
 from flask import Flask, request, render_template  #pip install flask
+from decouple import config
 import openai #pip install openai
 
 app = Flask(__name__)
 
-openai.api_key = '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'
+openai.api_key = config('SECRET_KEY', default='secret_key_openAI')
 
 @app.route('/', methods = ['GET'])
 def index():

@@ -1,6 +1,6 @@
-from flask import Flask, request, render_template  #pip install flask
+from flask import Flask, request, render_template
 from decouple import config
-import openai #pip install openai
+import openai
 
 app = Flask(__name__)
 
@@ -8,7 +8,7 @@ openai.api_key = config('SECRET_KEY', default='secret_key_openAI')
 
 @app.route('/', methods = ['GET'])
 def index():
-  return render_template(index.html)
+  return render_template('index.html')
 
 @app.route('/prompt', methods = ['POST'])
 def prompt():
